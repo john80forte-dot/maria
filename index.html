@@ -1,0 +1,1668 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#171317">
+<title>Maria Cicera | Eudora</title>
+
+<style>
+:root{
+    --rosa:#a54d78;
+    --rosa-hover:#8d3f66;
+    --rosa-claro:#f4e4ec;
+    --fundo:#fff;
+    --card:#fff;
+    --texto:#222;
+    --sec:#777;
+    --borda:#e8e8e8;
+    --header:rgba(255,255,255,.96);
+    --sombra:0 8px 28px rgba(0,0,0,.09);
+}
+body.dark{
+    --fundo:#171317;
+    --card:#211a20;
+    --texto:#fff;
+    --sec:#b8aeb7;
+    --borda:#393039;
+    --header:rgba(23,19,23,.96);
+    --rosa-claro:#34232d;
+    --sombra:0 8px 30px rgba(0,0,0,.35);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    background:var(--fundo);
+    color:var(--texto);
+    transition:.25s;
+}
+button,input,select,textarea{font:inherit}
+
+/* HEADER DESKTOP */
+header{
+    position:sticky;
+    top:0;
+    z-index:1000;
+    background:var(--header);
+    backdrop-filter:blur(14px);
+    border-bottom:1px solid var(--borda);
+}
+.navbar{
+    max-width:1200px;
+    height:65px;
+    margin:auto;
+    padding:0 20px;
+    display:flex;
+    align-items:center;
+    gap:24px;
+}
+.logo{
+    color:var(--rosa);
+    font-size:24px;
+    font-weight:700;
+    white-space:nowrap;
+}
+.desktop-search{flex:1;position:relative}
+.search-box{position:relative}
+.desktop-search input{
+    width:100%;
+    height:43px;
+    border:1px solid var(--borda);
+    border-radius:24px;
+    background:var(--card);
+    color:var(--texto);
+    outline:none;
+    padding:0 44px 0 18px;
+}
+.desktop-search input:focus{
+    border-color:var(--rosa);
+    box-shadow:0 0 0 3px rgba(165,77,120,.12);
+}
+.search-icon{
+    position:absolute;
+    right:16px;
+    top:50%;
+    transform:translateY(-50%);
+    pointer-events:none;
+}
+.nav-buttons{display:flex;gap:9px}
+.icon-btn{
+    width:42px;height:42px;border:0;border-radius:50%;
+    background:var(--rosa-claro);color:var(--rosa);
+    cursor:pointer;position:relative;
+}
+.cart-count{
+    display:none;
+    position:absolute;
+    right:-3px;top:-3px;
+    min-width:19px;height:19px;
+    padding:2px 5px;border-radius:20px;
+    background:var(--rosa);color:#fff;
+    font-size:11px;font-weight:bold;
+    align-items:center;justify-content:center;
+}
+
+/* SUGESTÕES DESKTOP */
+.search-suggestions{
+    display:none;
+    position:absolute;
+    left:0;right:0;top:51px;
+    background:var(--card);
+    border:1px solid var(--borda);
+    border-radius:14px;
+    box-shadow:var(--sombra);
+    overflow:hidden;
+    max-height:380px;
+    overflow-y:auto;
+    z-index:1200;
+}
+.search-suggestions.show{display:block}
+.suggestion{
+    width:100%;
+    border:0;
+    background:transparent;
+    color:var(--texto);
+    display:flex;
+    align-items:center;
+    gap:12px;
+    text-align:left;
+    padding:11px 14px;
+    cursor:pointer;
+}
+.suggestion:hover{background:var(--rosa-claro)}
+.suggestion-image{
+    width:48px;height:48px;border-radius:9px;
+    object-fit:cover;background:#eee;flex-shrink:0;
+}
+.suggestion-info{flex:1;min-width:0}
+.suggestion-name{font-size:14px;font-weight:bold}
+.suggestion-category{font-size:12px;color:var(--sec);margin-top:3px}
+.suggestion-price{font-size:14px;font-weight:bold;color:var(--rosa)}
+.no-results{padding:20px;text-align:center;color:var(--sec)}
+
+/* PESQUISA MOBILE: BLOCO INTEIRO OCULTO NO DESKTOP */
+.mobile-search-bar,
+.mobile-search-screen{display:none !important}
+
+/* HERO */
+.hero{
+    max-width:1200px;
+    margin:35px auto 28px;
+    padding:45px 30px;
+    border-radius:25px;
+    background:var(--rosa-claro);
+    display:flex;
+    align-items:center;
+    gap:40px;
+}
+.hero-logo{
+    width:150px;height:150px;border-radius:50%;
+    background:var(--rosa);color:#fff;
+    display:flex;align-items:center;justify-content:center;
+    text-align:center;font-size:20px;font-weight:bold;
+    flex-shrink:0;
+}
+.hero-text h1{font-size:38px;margin-bottom:12px}
+.hero-text p{color:var(--sec);line-height:1.6;max-width:680px}
+
+/* CATEGORIAS */
+.categories{
+    max-width:1200px;
+    margin:25px auto;
+    padding:0 20px;
+    display:flex;gap:10px;overflow-x:auto;
+}
+.category{
+    border:1px solid var(--borda);
+    background:var(--card);color:var(--texto);
+    padding:10px 18px;border-radius:24px;
+    cursor:pointer;white-space:nowrap;
+}
+.category:hover{background:var(--rosa);color:#fff}
+
+/* PRODUTOS */
+.products-section{max-width:1200px;margin:40px auto;padding:0 20px}
+.section-title{font-size:26px;margin-bottom:20px}
+.products{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.product{
+    background:var(--card);
+    border:1px solid var(--borda);
+    border-radius:18px;
+    overflow:hidden;
+    box-shadow:var(--sombra);
+    transition:.2s;
+}
+.product:hover{transform:translateY(-3px)}
+.product-image{
+    width:100%;height:240px;
+    object-fit:cover;background:#f2f2f2;
+}
+.product-info{padding:17px}
+.product-name{font-size:18px;margin-bottom:8px}
+.product-description{
+    color:var(--sec);font-size:14px;
+    line-height:1.45;min-height:41px;
+}
+.stock{color:var(--sec);font-size:13px;margin-top:10px}
+.price{font-size:22px;font-weight:bold;color:var(--rosa);margin-top:12px}
+.add-button{
+    width:100%;border:0;border-radius:10px;
+    padding:12px;margin-top:15px;
+    background:var(--rosa);color:#fff;
+    font-weight:bold;cursor:pointer;
+}
+.add-button:hover{background:var(--rosa-hover)}
+.add-button:disabled{background:#777;cursor:not-allowed}
+
+/* INFORMAÇÕES */
+.info-section{
+    max-width:1200px;margin:60px auto;
+    padding:0 20px;display:grid;
+    grid-template-columns:repeat(2,1fr);gap:20px;
+}
+.info-card{padding:25px;border-radius:18px;background:var(--rosa-claro)}
+.info-card h2{margin-bottom:15px}
+.info-card p{margin:8px 0;color:var(--sec)}
+
+/* TOAST */
+.cart-toast{
+    position:fixed;left:50%;bottom:25px;
+    transform:translate(-50%,140px);
+    background:var(--card);color:var(--texto);
+    border:1px solid var(--borda);
+    box-shadow:var(--sombra);border-radius:15px;
+    padding:13px 16px;z-index:2500;
+    display:flex;align-items:center;gap:15px;
+    transition:.3s;
+}
+.cart-toast.show{transform:translate(-50%,0)}
+.cart-toast button{
+    border:0;background:var(--rosa);color:#fff;
+    padding:8px 13px;border-radius:8px;
+    cursor:pointer;font-weight:bold;
+}
+
+/* CARRINHO */
+.cart{
+    position:fixed;right:-460px;top:0;
+    width:440px;max-width:95%;height:100vh;
+    background:var(--card);z-index:2000;
+    box-shadow:-10px 0 40px rgba(0,0,0,.2);
+    transition:.3s;padding:25px;
+    display:flex;flex-direction:column;overflow-y:auto;
+}
+.cart.open{right:0}
+.cart-header{
+    display:flex;justify-content:space-between;
+    align-items:center;margin-bottom:20px;
+}
+.close-cart{border:0;background:none;color:var(--texto);font-size:28px;cursor:pointer}
+.cart-item{padding:15px 0;border-bottom:1px solid var(--borda)}
+.cart-item-name{font-weight:bold;margin-bottom:8px}
+.cart-item-price{color:var(--rosa);font-weight:bold}
+.quantity-control{display:flex;align-items:center;gap:10px;margin-top:10px}
+.quantity-control button{
+    width:30px;height:30px;border:1px solid var(--borda);
+    background:var(--rosa-claro);color:var(--texto);
+    border-radius:7px;cursor:pointer;font-size:17px;
+}
+.quantity-control span{min-width:25px;text-align:center;font-weight:bold}
+.remove-item{margin-top:8px;border:0;background:none;color:#c44;cursor:pointer}
+.cart-form h3{margin:20px 0 12px}
+.form-group{margin-bottom:12px}
+.form-group label{display:block;margin-bottom:5px;font-size:13px;font-weight:bold}
+.form-group input,.form-group select,.form-group textarea{
+    width:100%;padding:11px;border:1px solid var(--borda);
+    border-radius:9px;background:var(--fundo);color:var(--texto);outline:none;
+}
+.form-group textarea{min-height:65px;resize:vertical}
+.delivery-info{
+    padding:13px;border-radius:10px;
+    background:var(--rosa-claro);
+    margin:10px 0 15px;font-size:14px;line-height:1.5;
+}
+.order-summary{
+    margin-top:15px;padding:15px;
+    border-radius:12px;background:var(--rosa-claro);
+}
+.order-summary h3{margin-bottom:12px}
+.order-summary p{
+    margin:8px 0;display:flex;
+    justify-content:space-between;gap:10px;
+}
+.order-total{
+    border-top:1px solid var(--borda);
+    margin-top:10px;padding-top:12px;
+    font-size:21px;font-weight:bold;color:var(--rosa);
+}
+.checkout{
+    width:100%;margin-top:18px;padding:15px;
+    border:0;border-radius:10px;
+    background:#25d366;color:#fff;
+    font-weight:bold;font-size:16px;cursor:pointer;
+}
+footer{
+    margin-top:70px;padding:35px 20px;
+    text-align:center;border-top:1px solid var(--borda);
+    color:var(--sec);
+}
+
+/* =========================================================
+   NOTEBOOK / TABLET
+   Mantém o desktop original e melhora telas intermediárias.
+========================================================= */
+@media (min-width:651px) and (max-width:1100px){
+
+    .navbar{
+        max-width:100%;
+        padding:0 18px;
+        gap:15px;
+    }
+
+    .hero{
+        margin:28px 22px 24px;
+        padding:34px 28px;
+    }
+
+    .products-section,
+    .categories,
+    .info-section{
+        max-width:100%;
+    }
+
+    .products{
+        grid-template-columns:repeat(3,1fr);
+        gap:16px;
+    }
+
+    .product-image{height:220px}
+}
+
+/* =========================================================
+   CELULAR
+   Interface própria, limpa e encaixada na tela.
+========================================================= */
+@media (max-width:650px){
+
+    body{
+        overflow-x:hidden;
+    }
+
+    header{
+        position:sticky;
+        top:0;
+    }
+
+    .desktop-search{
+        display:none !important;
+    }
+
+    .navbar{
+        height:58px;
+        padding:0 13px;
+        gap:8px;
+    }
+
+    .logo{
+        font-size:20px;
+        flex:1;
+    }
+
+    .nav-buttons{
+        gap:6px;
+    }
+
+    .icon-btn{
+        width:38px;
+        height:38px;
+        font-size:15px;
+    }
+
+    /* Pesquisa mobile */
+    .mobile-search-bar{
+        display:block !important;
+        padding:8px 12px 10px;
+        border-top:1px solid var(--borda);
+    }
+
+    .mobile-search-button{
+        width:100%;
+        height:43px;
+        border:1px solid var(--borda);
+        border-radius:14px;
+        background:var(--card);
+        color:var(--sec);
+        display:flex;
+        align-items:center;
+        gap:9px;
+        padding:0 14px;
+        text-align:left;
+        cursor:pointer;
+        box-shadow:0 2px 10px rgba(0,0,0,.04);
+    }
+
+    .mobile-search-button span{
+        font-size:14px;
+    }
+
+    /* Tela de pesquisa */
+    .mobile-search-screen{
+        display:none !important;
+        position:fixed;
+        inset:0;
+        z-index:5000;
+        background:var(--fundo);
+        flex-direction:column;
+    }
+
+    .mobile-search-screen.open{
+        display:flex !important;
+    }
+
+    .mobile-search-header{
+        height:61px;
+        padding:8px 10px;
+        display:flex;
+        align-items:center;
+        gap:5px;
+        border-bottom:1px solid var(--borda);
+    }
+
+    .mobile-back{
+        width:39px;
+        height:39px;
+        border:0;
+        background:none;
+        color:var(--texto);
+        font-size:25px;
+        cursor:pointer;
+    }
+
+    .mobile-search-input-area{
+        position:relative;
+        flex:1;
+    }
+
+    .mobile-search-input{
+        width:100%;
+        height:42px;
+        padding:0 38px 0 15px;
+        border:0;
+        border-radius:14px;
+        background:var(--rosa-claro);
+        color:var(--texto);
+        outline:none;
+    }
+
+    .mobile-clear{
+        display:none;
+        position:absolute;
+        right:10px;
+        top:50%;
+        transform:translateY(-50%);
+        border:0;
+        background:none;
+        color:var(--sec);
+        cursor:pointer;
+    }
+
+    .mobile-results{
+        flex:1;
+        overflow-y:auto;
+        padding:5px 0 20px;
+    }
+
+    .mobile-search-title{
+        padding:13px 17px 8px;
+        color:var(--sec);
+        font-size:13px;
+        font-weight:600;
+    }
+
+    .mobile-suggestion{
+        width:100%;
+        border:0;
+        background:transparent;
+        color:var(--texto);
+        display:flex;
+        align-items:center;
+        gap:12px;
+        padding:11px 16px;
+        text-align:left;
+        cursor:pointer;
+    }
+
+    .mobile-suggestion:active{
+        background:var(--rosa-claro);
+    }
+
+    .mobile-suggestion img{
+        width:56px;
+        height:56px;
+        border-radius:12px;
+        object-fit:cover;
+        background:#eee;
+        flex-shrink:0;
+    }
+
+    .mobile-suggestion-info{
+        flex:1;
+        min-width:0;
+    }
+
+    .mobile-suggestion-name{
+        font-weight:700;
+        font-size:14px;
+        white-space:nowrap;
+        overflow:hidden;
+        text-overflow:ellipsis;
+    }
+
+    .mobile-suggestion-description{
+        margin-top:4px;
+        color:var(--sec);
+        font-size:12px;
+        white-space:nowrap;
+        overflow:hidden;
+        text-overflow:ellipsis;
+    }
+
+    .mobile-suggestion-price{
+        margin-top:5px;
+        color:var(--rosa);
+        font-weight:700;
+        font-size:13px;
+    }
+
+    /* Hero inicial: compacto e sem descrição no celular */
+    .hero{
+        margin:14px 12px 18px;
+        padding:24px 16px 22px;
+        min-height:0;
+        border-radius:22px;
+        display:flex;
+        flex-direction:column;
+        justify-content:center;
+        gap:13px;
+        text-align:center;
+    }
+
+    .hero-logo{
+        width:88px;
+        height:88px;
+        font-size:15px;
+        line-height:1.05;
+    }
+
+    .hero-text h1{
+        font-size:25px;
+        margin:0;
+    }
+
+    /* A descrição fica escondida SOMENTE no celular */
+    .hero-text p{
+        display:none !important;
+    }
+
+    /* Categorias */
+    .categories{
+        margin:0;
+        padding:0 12px 4px;
+        gap:8px;
+        overflow-x:auto;
+        scrollbar-width:none;
+    }
+
+    .categories::-webkit-scrollbar{
+        display:none;
+    }
+
+    .category{
+        padding:9px 14px;
+        border-radius:12px;
+        font-size:12px;
+        flex-shrink:0;
+    }
+
+    .category:active{
+        transform:scale(.97);
+    }
+
+    /* Produtos */
+    .products-section{
+        margin:25px auto 0;
+        padding:0 12px;
+    }
+
+    .section-title{
+        font-size:22px;
+        margin-bottom:14px;
+    }
+
+    .products{
+        grid-template-columns:repeat(2,minmax(0,1fr));
+        gap:11px;
+    }
+
+    .product{
+        border-radius:15px;
+        box-shadow:0 4px 16px rgba(0,0,0,.07);
+    }
+
+    .product:hover{
+        transform:none;
+    }
+
+    .product-image{
+        height:165px;
+    }
+
+    .product-info{
+        padding:11px;
+    }
+
+    .product-name{
+        font-size:14px;
+        line-height:1.25;
+        margin-bottom:6px;
+    }
+
+    /* Descrição dos produtos escondida somente no celular */
+    .product-description{
+        display:none !important;
+    }
+
+    .stock{
+        font-size:11px;
+        margin-top:7px;
+    }
+
+    .price{
+        font-size:18px;
+        margin-top:8px;
+    }
+
+    .add-button{
+        padding:10px 7px;
+        margin-top:10px;
+        border-radius:9px;
+        font-size:12px;
+    }
+
+    /* Informações inferiores */
+    .info-section{
+        grid-template-columns:1fr;
+        gap:12px;
+        margin:35px auto 0;
+        padding:0 12px;
+    }
+
+    .info-card{
+        padding:18px;
+        border-radius:15px;
+    }
+
+    .info-card h2{
+        font-size:17px;
+        margin-bottom:10px;
+    }
+
+    .info-card p{
+        font-size:13px;
+        margin:6px 0;
+    }
+
+    footer{
+        margin-top:40px;
+        padding:28px 15px;
+        font-size:12px;
+    }
+
+    /* Carrinho */
+    .cart{
+        width:100%;
+        max-width:100%;
+        right:-100%;
+        padding:18px 15px;
+    }
+
+    .cart.open{
+        right:0;
+    }
+
+    .cart-header{
+        margin-bottom:15px;
+    }
+
+    .cart-toast{
+        width:calc(100% - 24px);
+        bottom:14px;
+        padding:11px 12px;
+        font-size:12px;
+        justify-content:space-between;
+        gap:8px;
+    }
+
+    .cart-toast button{
+        padding:8px 10px;
+        font-size:12px;
+        white-space:nowrap;
+    }
+}
+
+/* Celulares muito pequenos */
+@media(max-width:390px){
+
+    .logo{
+        font-size:18px;
+    }
+
+    .hero{
+        margin-left:9px;
+        margin-right:9px;
+        padding:21px 13px;
+    }
+
+    .hero-logo{
+        width:78px;
+        height:78px;
+        font-size:13px;
+    }
+
+    .hero-text h1{
+        font-size:23px;
+    }
+
+    .categories{
+        padding-left:9px;
+        padding-right:9px;
+    }
+
+    .products-section{
+        padding-left:9px;
+        padding-right:9px;
+    }
+
+    .products{
+        gap:8px;
+    }
+
+    .product-image{
+        height:150px;
+    }
+
+    .product-info{
+        padding:9px;
+    }
+
+    .product-name{
+        font-size:13px;
+    }
+
+    .price{
+        font-size:17px;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="navbar">
+        <div class="logo">Maria Cicera</div>
+
+        <div class="desktop-search">
+            <div class="search-box">
+                <input id="desktopSearchInput" type="text"
+                       placeholder="Pesquisar produtos..."
+                       autocomplete="off">
+                <span class="search-icon">🔎</span>
+            </div>
+            <div id="desktopSuggestions" class="search-suggestions"></div>
+        </div>
+
+        <div class="nav-buttons">
+            <button class="icon-btn" id="themeButton" onclick="toggleTheme()">🌙</button>
+            <button class="icon-btn" onclick="openCart()" aria-label="Carrinho">
+                🛒
+                <span id="cartCount" class="cart-count">0</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- ÚNICO bloco visível de pesquisa mobile -->
+    <div class="mobile-search-bar">
+        <button class="mobile-search-button" onclick="openMobileSearch()">
+            🔎 <span>Pesquisar produtos</span>
+        </button>
+    </div>
+</header>
+
+<!-- Tela de pesquisa mobile, inicialmente invisível -->
+<div id="mobileSearchScreen" class="mobile-search-screen">
+    <div class="mobile-search-header">
+        <button class="mobile-back" onclick="closeMobileSearch()">←</button>
+        <div class="mobile-search-input-area">
+            <input id="mobileSearchInput" class="mobile-search-input"
+                   type="text" placeholder="Pesquisar..." autocomplete="off">
+            <button id="mobileClear" class="mobile-clear"
+                    onclick="clearMobileSearch()">✕</button>
+        </div>
+    </div>
+    <div id="mobileResults" class="mobile-results"></div>
+</div>
+
+<section class="hero">
+    <div class="hero-logo">MARIA<br>CICERA</div>
+    <div class="hero-text">
+        <h1>Maria Cicera</h1>
+        <p>
+            Produtos Eudora selecionados para você.
+            Encontre seus cosméticos favoritos, confira os preços
+            e faça seu pedido de forma simples e rápida.
+        </p>
+    </div>
+</section>
+
+<div class="categories">
+    <button class="category" onclick="filterCategory('todos')">Todos</button>
+    <button class="category" onclick="filterCategory('perfume')">Perfumes</button>
+    <button class="category" onclick="filterCategory('corpo')">Corpo</button>
+    <button class="category" onclick="filterCategory('rosto')">Rosto</button>
+    <button class="category" onclick="filterCategory('cabelo')">Cabelo</button>
+    <button class="category" onclick="filterCategory('maquiagem')">Maquiagem</button>
+</div>
+
+<section id="productsSection" class="products-section">
+    <h2 class="section-title">Produtos</h2>
+    <div id="products" class="products"></div>
+</section>
+
+<section class="info-section">
+    <div class="info-card">
+        <h2>🚚 Entregas</h2>
+        <p>📍 Santa Antonieta — Marília/SP</p>
+        <p><strong>Entrega grátis</strong></p>
+        <p>📍 Zona Sul — Marília/SP</p>
+        <p><strong>Taxa de entrega: R$ 10,00</strong></p>
+        <p>🚚 Entregas somente em Marília/SP.</p>
+    </div>
+
+    <div class="info-card">
+        <h2>💳 Pagamentos</h2>
+        <p>💠 Pix</p>
+        <p>💵 Dinheiro</p>
+        <p>💳 Cartão</p>
+    </div>
+</section>
+
+<footer>
+    <strong>Maria Cicera</strong><br><br>
+    Produtos Eudora • Marília/SP<br><br>
+    © 2026 Maria Cicera
+</footer>
+
+<div id="cartToast" class="cart-toast">
+    <span>✅ Produto adicionado ao carrinho</span>
+    <button onclick="openCart()">Ir ao carrinho</button>
+</div>
+
+<div id="cart" class="cart">
+    <div class="cart-header">
+        <h2>🛒 Seu carrinho</h2>
+        <button class="close-cart" onclick="closeCart()">×</button>
+    </div>
+
+    <div id="cartItems" class="cart-items"></div>
+
+    <div class="cart-form">
+        <h3>👤 Seus dados</h3>
+
+        <div class="form-group">
+            <label>Nome completo</label>
+            <input id="customerName" type="text" placeholder="Digite seu nome">
+        </div>
+
+        <div class="form-group">
+            <label>WhatsApp</label>
+            <input id="customerPhone" type="tel" placeholder="(14) 99999-9999">
+        </div>
+
+        <h3>🚚 Entrega</h3>
+
+        <div class="form-group">
+            <label>Cidade</label>
+            <input type="text" value="Marília - SP" readonly>
+        </div>
+
+        <div class="form-group">
+            <label>Região</label>
+            <select id="deliveryRegion" onchange="updateDelivery()">
+                <option value="">Selecione a região</option>
+                <option value="santa-antonieta">Santa Antonieta — Grátis</option>
+                <option value="zona-sul">Zona Sul — R$ 10,00</option>
+            </select>
+        </div>
+
+        <div id="deliveryInfo" class="delivery-info">
+            📍 Escolha a região para calcular a entrega.
+        </div>
+
+        <div class="form-group">
+            <label>Rua / Avenida</label>
+            <input id="customerStreet" type="text" placeholder="Nome da rua ou avenida">
+        </div>
+
+        <div class="form-group">
+            <label>Número da casa / apartamento</label>
+            <input id="customerNumber" type="text" placeholder="Ex.: 125">
+        </div>
+
+        <div class="form-group">
+            <label>Complemento</label>
+            <input id="customerComplement" type="text"
+                   placeholder="Casa, apartamento, bloco...">
+        </div>
+
+        <h3>💳 Pagamento</h3>
+
+        <div class="form-group">
+            <label>Forma de pagamento</label>
+            <select id="paymentMethod">
+                <option value="">Selecione</option>
+                <option value="Pix">Pix</option>
+                <option value="Dinheiro">Dinheiro</option>
+                <option value="Cartão">Cartão</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Observação</label>
+            <textarea id="customerObservation"
+                      placeholder="Alguma observação sobre o pedido?"></textarea>
+        </div>
+    </div>
+
+    <div class="order-summary">
+        <h3>Resumo do pedido</h3>
+        <div id="checkoutItems"></div>
+
+        <p>
+            <span>Produtos</span>
+            <strong id="checkoutProductsTotal">R$ 0,00</strong>
+        </p>
+
+        <p>
+            <span>Entrega</span>
+            <strong id="checkoutDelivery">R$ 0,00</strong>
+        </p>
+
+        <div id="checkoutFinalTotal" class="order-total">
+            Total: R$ 0,00
+        </div>
+    </div>
+
+    <button class="checkout" onclick="finishOrder()">
+        📱 Continuar pedido pelo WhatsApp
+    </button>
+</div>
+
+<script>
+/* =========================================================
+   CONFIGURAÇÕES
+========================================================= */
+
+/* TROQUE PELO WHATSAPP DA MARIA CICERA */
+const WHATSAPP = "5514998905048";
+
+/* TAXA DA ZONA SUL */
+const TAXA_ZONA_SUL = 10;
+
+/* =========================================================
+   PRODUTOS
+   EDITE SOMENTE ESTA ÁREA PARA CADASTRAR PRODUTOS
+========================================================= */
+const productsData = [
+    {
+        id:1,
+        name:"Desodorante Antitranspirante Roll-on Malbec 55ml",
+        category:"corpo",
+        description:"O Boticário • proteção antitranspirante e fragrância Malbec.",
+        price:29.90,
+        stock:1,
+        image:"https://oboticariove.com/cdn/shop/products/DesodoranteAntitranspiranteRoll-OnMALBEC-01_2048x.png?v=1657735832"
+    },
+    {
+        id:2,
+        name:"Desodorante Antitranspirante Eudora Instance Algodão e Jasmim 55ml",
+        category:"corpo",
+        description:"Antitranspirante roll-on da linha Instance, com algodão e jasmim.",
+        price:0,
+        stock:1,
+        image:"https://res.cloudinary.com/beleza-na-web/image/upload/w_1500%2Cf_auto%2Cfl_progressive%2Cq_auto%3Abest/v1/imagens/product/E53194/23e23875-cb57-4cd4-a5ca-e05c81e92d04-instance-antitranspirante-rollon-algodao-jasmim-55ml-53194-frontal-1.jpg"
+    },
+    {
+        id:3,
+        name:"Eudora Instance Cereja e Amêndoas Refil 350ml",
+        category:"corpo",
+        description:"Refil do creme hidratante desodorante corporal Cereja e Amêndoas. 80% menos plástico.",
+        price:49.99,
+        stock:1,
+        image:"https://res.cloudinary.com/beleza-na-web/image/upload/w_1500%2Cf_avif%2Cfl_progressive%2Cq_auto%3Aeco%2Cw_800/v1/imagens/product/E52386/8c128a41-63f4-438d-983a-28b39bfafdd3-instance-creme-hidratante-refil-350ml-e52386-frontal-1.jpg"
+    },
+    {
+        id:4,
+        name:"Eudora Instance Rosa Absoluta Refil 350ml",
+        category:"corpo",
+        description:"Refil de creme hidratante desodorante corporal Rosa Absoluta. 80% menos plástico.",
+        price:49.99,
+        stock:1,
+        image:"https://res.cloudinary.com/beleza-na-web/image/upload/w_1500%2Cf_avif%2Cfl_progressive%2Cq_auto%3Aeco%2Cw_800/v1/imagens/product/E59065/7aaf0841-8afa-472e-aed1-297d3499f96c-e59065-refil-instance-creme-hidratante-desodorante-corporal-rosa-absoluta-350ml-1.jpg"
+    },
+    {
+        id:5,
+        name:"Eudora Instance Baunilha Intensa Refil 350ml",
+        category:"corpo",
+        description:"Refil de creme hidratante corporal Baunilha Intensa, com embalagem econômica.",
+        price:49.99,
+        stock:1,
+        image:"https://res.cloudinary.com/beleza-na-web/image/upload/w_1500%2Cf_avif%2Cfl_progressive%2Cq_auto%3Aeco%2Cw_800/v1/imagens/product/E87779/e4aa4613-ce69-4e0f-93b3-9f7c6f21de23-e87779-refil-instance-creme-hidratante-desodorante-corporal-baunilha-intensa-2.jpg"
+    },
+    {
+        id:6,
+        name:"Eudora Instance Frutas Vermelhas Refil 350ml",
+        category:"corpo",
+        description:"Refil de creme hidratante desodorante corporal Frutas Vermelhas.",
+        price:49.99,
+        stock:1,
+        image:"https://res.cloudinary.com/beleza-na-web/image/upload/w_1500%2Cf_avif%2Cfl_progressive%2Cq_auto%3Aeco%2Cw_800/v1/imagens/product/E87127/e87b3be1-cfc5-4ad7-ac21-0ed0edfbc170-e87127-instance-frutas-vermelhas-refil-350ml-1.jpg"
+    },
+    {
+        id:7,
+        name:"Eudora Instance Obsessão por Baunilha Refil 350ml",
+        category:"corpo",
+        description:"Refil de creme hidratante corporal com fragrância intensa de baunilha.",
+        price:49.99,
+        stock:1,
+        image:"https://down-br.img.susercontent.com/file/sg-11134201-82630-mlnx1cje8glk21"
+    },
+    {
+        id:8,
+        name:"Eudora Instance Maracujá Refil 350ml",
+        category:"corpo",
+        description:"Refil de creme hidratante desodorante corporal Maracujá. 80% menos plástico.",
+        price:49.99,
+        stock:1,
+        image:"https://cdn.dooca.store/143231/products/5hm7vxf6nbjh7tlck5bnrjjfw7snsby2pe0x_580x756%2Bfill_ffffff.jpg?v=1736366374&webp=0"
+    },
+    {
+        id:9,
+        name:"Eudora Instance Karité Sabonete Líquido Perfumado 400ml",
+        category:"corpo",
+        description:"Sabonete líquido perfumado Instance Karité 400ml.",
+        price:0,
+        stock:1,
+        image:"https://res.cloudinary.com/beleza-na-web/image/upload/w_1500%2Cf_avif%2Cfl_progressive%2Cq_auto%3Aeco%2Cw_800/v1/imagens/product/E87259/dd025a40-125f-40ca-be09-a486c8a82b48-e87259-instance-karite-sabonete-liquido-400ml-1.jpg"
+    },
+    {
+        id:10,
+        name:"Eudora Instance Baunilha Creme Hidratante Desodorante Corporal 400ml",
+        category:"corpo",
+        description:"Creme hidratante desodorante corporal Instance Baunilha 400ml.",
+        price:59.99,
+        stock:1,
+        image:"https://res.cloudinary.com/beleza-na-web/image/upload/w_1500,f_avif,fl_progressive,q_auto:eco,w_800/v1/imagens/product/E87135/31934cb7-17c5-4e5e-a6fb-2e3746e082d2-e87135-instance-baunilha-hidratante-400ml-1.jpg"
+    },
+    {
+        id:11,
+        name:"Eudora Instance Frutas Vermelhas Creme Desodorante Corporal 400ml",
+        category:"corpo",
+        description:"Creme hidratante desodorante corporal Frutas Vermelhas 400ml.",
+        price:59.99,
+        stock:1,
+        image:"https://res.cloudinary.com/beleza-na-web/image/upload/w_1500%2Cf_avif%2Cfl_progressive%2Cq_auto%3Aeco%2Cw_800/v1/imagens/product/E87127/e87b3be1-cfc5-4ad7-ac21-0ed0edfbc170-e87127-instance-frutas-vermelhas-refil-350ml-1.jpg"
+    },
+    {
+        id:12,
+        name:"Eudora Instance Baunilha Glow Creme Hidratante Corporal 400ml",
+        category:"corpo",
+        description:"Creme hidratante desodorante corporal Baunilha Glow 400ml.",
+        price:0,
+        stock:1,
+        image:"https://images.tcdn.com.br/img/img_prod/1241437/eudora_instance_baunilha_glow_213_3_f14bc92dc0cea95b916d50f259c00aab.jpg"
+    },
+    {
+        id:13,
+        name:"Eudora Club 6 Voyage 95ml",
+        category:"perfume",
+        description:"Desodorante colônia masculino Club 6 Voyage 95ml.",
+        price:154.90,
+        stock:1,
+        image:"https://res.cloudinary.com/beleza-na-web/image/upload/w_1500%2Cf_avif%2Cfl_progressive%2Cq_auto%3Aeco%2Cw_800/v1/imagens/product/E87292/2a02a614-7633-4ec9-82d6-9e7832fdd765-e87292-club-6-voyage-des-col-95ml-1.jpg"
+    },
+    {
+        id:14,
+        name:"Eudora Pulse Action 100ml",
+        category:"perfume",
+        description:"Desodorante colônia masculino Pulse Action 100ml.",
+        price:0,
+        stock:1,
+        image:"https://res.cloudinary.com/beleza-na-web/image/upload/w_1500%2Cf_avif%2Cfl_progressive%2Cq_auto%3Aeco%2Cw_800/v1/imagens/products/E51834/PULSE_ACTION_COLONIA_E51834.jpg"
+    },
+    {
+        id:15,
+        name:"O Boticário Egeo Choc High 90ml",
+        category:"perfume",
+        description:"Egeo Choc High Eau de Toilette 90ml.",
+        price:0,
+        stock:1,
+        image:"https://cdn.shopify.com/s/files/1/0630/3029/6801/files/55106_EGEOEDTCHOCHIGHEXP90ml-3.jpg?v=1764635961"
+    },
+    {
+        id:16,
+        name:"Eudora Creme Acetinado Hidratante Desodorante Corporal 200g",
+        category:"corpo",
+        description:"Creme acetinado hidratante desodorante corporal 200g.",
+        price:0,
+        stock:1,
+        image:"https://res.cloudinary.com/beleza-na-web/image/upload/w_1500%2Cf_avif%2Cfl_progressive%2Cq_auto%3Aeco%2Cw_800/v1/imagens/product/E93221/9d2bd9d8-6635-49e9-abec-526303ed6690-eudora-magnific-creme-acetinado-desodorante-hidratante-48932-93221.jpg"
+    },
+    {
+        id:17,
+        name:"Eudora Instance Morango Irresistível Sabonete Vegetal Barra",
+        category:"corpo",
+        description:"Sabonete vegetal em barra da linha Instance Morango Irresistível.",
+        price:0,
+        stock:1,
+        image:"https://res.cloudinary.com/beleza-na-web/image/upload/w_1500%2Cf_avif%2Cfl_progressive%2Cq_auto%3Aeco%2Cw_800/v1/imagens/product/E87108/2536bd71-8330-44c6-8330-bba6ca7d263e-e87108-instance-sabonete-barra-vegetal-morango-4x80g-1.jpg"
+    },
+    {
+        id:18,
+        name:"Eudora Instance Maracujá Sabonete Vegetal Barra",
+        category:"corpo",
+        description:"Sabonete vegetal em barra Instance Maracujá.",
+        price:0,
+        stock:1,
+        image:"https://res.cloudinary.com/beleza-na-web/image/upload/w_1500%2Cf_auto%2Cfl_progressive%2Cq_auto%3Abest/v1/imagens/product/E52758/b58500c1-e79a-4810-a01c-ca7a6deb17b2-eudora-instance-maracuja-sabonete-barra-frontal-52758-frontal-1.jpg"
+    },
+    {
+        id:19,
+        name:"Eudora Instance Karité Sabonete Vegetal Barra 80g",
+        category:"corpo",
+        description:"Sabonete vegetal perfumado Instance Karité. Barra de 80g.",
+        price:0,
+        stock:1,
+        image:"https://a-static.mlcdn.com.br/800x800/eudora-instance-karite-sabonete-vegetal-barra-perfumado-4x80g/bemmequeroclubcosmetics/3416/52c28617fedf58359369d4335f7650c8.jpeg"
+    }
+];
+
+let cart = [];
+let toastTimer;
+
+/* =========================================================
+   FUNÇÕES BÁSICAS
+========================================================= */
+function normalizeText(text){
+    return String(text || "")
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g,"")
+        .toLowerCase()
+        .trim()
+        .replace(/\s+/g," ");
+}
+
+function money(value){
+    return "R$ " + Number(value).toFixed(2).replace(".",",");
+}
+
+function searchableProduct(product){
+    return normalizeText(
+        product.name + " " +
+        product.description + " " +
+        product.category
+    );
+}
+
+/* =========================================================
+   PRODUTOS
+========================================================= */
+function productFallbackSVG(name){
+    const safe = String(name || "Produto").replace(/[<>&"]/g, "");
+    const short = safe.length > 28 ? safe.slice(0,28) + "…" : safe;
+    return "data:image/svg+xml;charset=UTF-8," + encodeURIComponent(
+        `<svg xmlns="http://www.w3.org/2000/svg" width="600" height="600">
+            <rect width="100%" height="100%" fill="#f4e4ec"/>
+            <circle cx="300" cy="235" r="100" fill="#a54d78"/>
+            <text x="300" y="230" text-anchor="middle" font-family="Arial" font-size="28" fill="white">MARIA</text>
+            <text x="300" y="265" text-anchor="middle" font-family="Arial" font-size="28" fill="white">CICERA</text>
+            <text x="300" y="405" text-anchor="middle" font-family="Arial" font-size="22" fill="#333">${short}</text>
+            <text x="300" y="440" text-anchor="middle" font-family="Arial" font-size="17" fill="#777">Imagem do produto</text>
+        </svg>`
+    );
+}
+
+function renderProducts(list=productsData){
+    const container=document.getElementById("products");
+    container.innerHTML="";
+
+    if(!list.length){
+        container.innerHTML='<p style="grid-column:1/-1;color:var(--sec);padding:20px 0">Nenhum produto encontrado.</p>';
+        return;
+    }
+
+    list.forEach(product=>{
+        const card=document.createElement("article");
+        card.className="product";
+
+        card.innerHTML=`
+            <img class="product-image" src="${product.image || productFallbackSVG(product.name)}" alt="${product.name}" onerror="this.onerror=null;this.src=productFallbackSVG(product.name)">
+            <div class="product-info">
+                <h3 class="product-name">${product.name}</h3>
+                <p class="product-description">${product.description}</p>
+                <p class="stock">
+                    ${product.stock>0
+                        ? "📦 "+product.stock+" unidades disponíveis"
+                        : "❌ Produto esgotado"}
+                </p>
+                <div class="price">${money(product.price)}</div>
+                <button class="add-button"
+                        onclick="addToCart(${product.id})"
+                        ${product.stock<=0?"disabled":""}>
+                    ${product.stock>0?"Adicionar ao carrinho":"Esgotado"}
+                </button>
+            </div>
+        `;
+        container.appendChild(card);
+    });
+}
+
+function searchProducts(text){
+    const query=normalizeText(text);
+
+    if(!query){
+        renderProducts();
+        return;
+    }
+
+    const words=query.split(" ");
+
+    const filtered=productsData.filter(product=>{
+        const searchable=searchableProduct(product);
+        return words.every(word=>searchable.includes(word));
+    });
+
+    renderProducts(filtered);
+}
+
+function getSuggestions(text){
+    const query=normalizeText(text);
+
+    if(!query) return productsData.slice(0,5);
+
+    const words=query.split(" ");
+
+    return productsData.filter(product=>{
+        const searchable=searchableProduct(product);
+        return words.every(word=>searchable.includes(word));
+    }).slice(0,7);
+}
+
+/* =========================================================
+   PESQUISA DESKTOP
+========================================================= */
+const desktopInput=document.getElementById("desktopSearchInput");
+const desktopSuggestions=document.getElementById("desktopSuggestions");
+
+function showDesktopSuggestions(text){
+    const suggestions=getSuggestions(text);
+    desktopSuggestions.innerHTML="";
+
+    if(!suggestions.length){
+        desktopSuggestions.innerHTML='<div class="no-results">Nenhum produto encontrado.</div>';
+        desktopSuggestions.classList.add("show");
+        return;
+    }
+
+    suggestions.forEach(product=>{
+        const button=document.createElement("button");
+        button.type="button";
+        button.className="suggestion";
+
+        button.innerHTML=`
+            <img class="suggestion-image" src="${product.image || productFallbackSVG(product.name)}" alt="" onerror="this.onerror=null;this.src=productFallbackSVG(product.name)">
+            <div class="suggestion-info">
+                <div class="suggestion-name">${product.name}</div>
+                <div class="suggestion-category">${product.category}</div>
+            </div>
+            <div class="suggestion-price">${money(product.price)}</div>
+        `;
+
+        button.addEventListener("click",()=>{
+            desktopInput.value=product.name;
+            desktopSuggestions.classList.remove("show");
+            renderProducts([product]);
+            document.getElementById("productsSection").scrollIntoView({behavior:"smooth"});
+        });
+
+        desktopSuggestions.appendChild(button);
+    });
+
+    desktopSuggestions.classList.add("show");
+}
+
+desktopInput.addEventListener("input",function(){
+    searchProducts(this.value);
+    showDesktopSuggestions(this.value);
+});
+
+desktopInput.addEventListener("focus",function(){
+    showDesktopSuggestions(this.value);
+});
+
+document.addEventListener("click",event=>{
+    if(!document.querySelector(".desktop-search").contains(event.target)){
+        desktopSuggestions.classList.remove("show");
+    }
+});
+
+/* =========================================================
+   PESQUISA MOBILE
+========================================================= */
+const mobileScreen=document.getElementById("mobileSearchScreen");
+const mobileInput=document.getElementById("mobileSearchInput");
+const mobileResults=document.getElementById("mobileResults");
+const mobileClear=document.getElementById("mobileClear");
+
+function openMobileSearch(){
+    mobileScreen.classList.add("open");
+    document.body.style.overflow="hidden";
+
+    setTimeout(()=>{
+        mobileInput.focus();
+        showMobileSuggestions("");
+    },80);
+}
+
+function closeMobileSearch(){
+    mobileScreen.classList.remove("open");
+    document.body.style.overflow="";
+}
+
+function clearMobileSearch(){
+    mobileInput.value="";
+    mobileClear.style.display="none";
+    searchProducts("");
+    showMobileSuggestions("");
+}
+
+function showMobileSuggestions(text){
+    const suggestions=getSuggestions(text);
+    mobileResults.innerHTML=`
+        <div class="mobile-search-title">
+            ${normalizeText(text) ? "Resultados encontrados" : "Sugestões de produtos"}
+        </div>
+    `;
+
+    if(!suggestions.length){
+        mobileResults.innerHTML+=`<div class="no-results">Nenhum produto encontrado.</div>`;
+        return;
+    }
+
+    suggestions.forEach(product=>{
+        const button=document.createElement("button");
+        button.type="button";
+        button.className="mobile-suggestion";
+
+        button.innerHTML=`
+            <img src="${product.image || productFallbackSVG(product.name)}" alt="" onerror="this.onerror=null;this.src=productFallbackSVG(product.name)">
+            <div class="mobile-suggestion-info">
+                <div class="mobile-suggestion-name">${product.name}</div>
+                <div class="mobile-suggestion-description">${product.description}</div>
+                <div class="mobile-suggestion-price">${money(product.price)}</div>
+            </div>
+        `;
+
+        button.addEventListener("click",()=>{
+            mobileInput.value=product.name;
+            mobileClear.style.display="block";
+            closeMobileSearch();
+            renderProducts([product]);
+            document.getElementById("productsSection").scrollIntoView({behavior:"smooth"});
+        });
+
+        mobileResults.appendChild(button);
+    });
+}
+
+mobileInput.addEventListener("input",function(){
+    const value=this.value;
+    mobileClear.style.display=value.length ? "block" : "none";
+    searchProducts(value);
+    showMobileSuggestions(value);
+});
+
+/* =========================================================
+   CATEGORIAS
+========================================================= */
+function filterCategory(category){
+    desktopInput.value="";
+
+    if(category==="todos"){
+        renderProducts();
+        return;
+    }
+
+    renderProducts(productsData.filter(product=>product.category===category));
+}
+
+/* =========================================================
+   CARRINHO
+========================================================= */
+function addToCart(id){
+    const product=productsData.find(p=>p.id===id);
+    if(!product || product.stock<=0) return;
+
+    const existing=cart.find(item=>item.id===id);
+
+    if(existing){
+        if(existing.quantity<product.stock) existing.quantity++;
+        else{
+            alert("Você atingiu o limite de estoque deste produto.");
+            return;
+        }
+    }else{
+        cart.push({
+            id:product.id,
+            name:product.name,
+            price:product.price,
+            quantity:1
+        });
+    }
+
+    updateCart();
+    showCartToast();
+}
+
+function showCartToast(){
+    const toast=document.getElementById("cartToast");
+    toast.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer=setTimeout(()=>toast.classList.remove("show"),5000);
+}
+
+function updateCart(){
+    const container=document.getElementById("cartItems");
+    container.innerHTML="";
+
+    if(!cart.length){
+        container.innerHTML="<p>Seu carrinho está vazio.</p>";
+    }
+
+    let totalQuantity=0;
+
+    cart.forEach(item=>{
+        totalQuantity+=item.quantity;
+        const subtotal=item.price*item.quantity;
+
+        const div=document.createElement("div");
+        div.className="cart-item";
+        div.innerHTML=`
+            <div class="cart-item-name">${item.name}</div>
+            <div class="cart-item-price">${money(item.price)} cada</div>
+            <div class="quantity-control">
+                <button onclick="changeQuantity(${item.id},-1)">−</button>
+                <span>${item.quantity}</span>
+                <button onclick="changeQuantity(${item.id},1)">+</button>
+            </div>
+            <div style="margin-top:8px">
+                Subtotal: <strong>${money(subtotal)}</strong>
+            </div>
+            <button class="remove-item" onclick="removeFromCart(${item.id})">Remover</button>
+        `;
+        container.appendChild(div);
+    });
+
+    const count=document.getElementById("cartCount");
+    count.innerText=totalQuantity;
+    count.style.display=totalQuantity ? "flex" : "none";
+
+    updateCheckoutSummary();
+}
+
+function changeQuantity(id,amount){
+    const item=cart.find(i=>i.id===id);
+    const product=productsData.find(p=>p.id===id);
+    if(!item || !product) return;
+
+    const next=item.quantity+amount;
+
+    if(next<=0){
+        removeFromCart(id);
+        return;
+    }
+
+    if(next>product.stock){
+        alert("Quantidade maior que o estoque disponível.");
+        return;
+    }
+
+    item.quantity=next;
+    updateCart();
+}
+
+function removeFromCart(id){
+    cart=cart.filter(item=>item.id!==id);
+    updateCart();
+}
+
+function openCart(){
+    document.getElementById("cart").classList.add("open");
+    document.getElementById("cartToast").classList.remove("show");
+}
+
+function closeCart(){
+    document.getElementById("cart").classList.remove("open");
+}
+
+/* =========================================================
+   ENTREGA
+========================================================= */
+function getDeliveryFee(){
+    return document.getElementById("deliveryRegion").value==="zona-sul"
+        ? TAXA_ZONA_SUL
+        : 0;
+}
+
+function updateDelivery(){
+    const region=document.getElementById("deliveryRegion").value;
+    const info=document.getElementById("deliveryInfo");
+
+    if(region==="santa-antonieta"){
+        info.innerHTML=`📍 <strong>Santa Antonieta — Marília/SP</strong><br>🚚 Entrega grátis.<br>Taxa: <strong>R$ 0,00</strong>`;
+    }else if(region==="zona-sul"){
+        info.innerHTML=`📍 <strong>Zona Sul — Marília/SP</strong><br>🚚 Entrega disponível.<br>Taxa: <strong>R$ 10,00</strong>`;
+    }else{
+        info.innerHTML="📍 Escolha a região para calcular a entrega.";
+    }
+
+    updateCheckoutSummary();
+}
+
+function updateCheckoutSummary(){
+    const container=document.getElementById("checkoutItems");
+    container.innerHTML="";
+
+    let productsTotal=0;
+
+    cart.forEach(item=>{
+        const subtotal=item.price*item.quantity;
+        productsTotal+=subtotal;
+
+        const p=document.createElement("p");
+        p.innerHTML=`<span>${item.quantity}x ${item.name}</span><strong>${money(subtotal)}</strong>`;
+        container.appendChild(p);
+    });
+
+    const delivery=getDeliveryFee();
+    const finalTotal=productsTotal+delivery;
+
+    document.getElementById("checkoutProductsTotal").innerText=money(productsTotal);
+    document.getElementById("checkoutDelivery").innerText=money(delivery);
+    document.getElementById("checkoutFinalTotal").innerText="Total: "+money(finalTotal);
+}
+
+/* =========================================================
+   WHATSAPP
+========================================================= */
+function finishOrder(){
+    if(!cart.length){
+        alert("Seu carrinho está vazio.");
+        return;
+    }
+
+    const name=document.getElementById("customerName").value.trim();
+    const phone=document.getElementById("customerPhone").value.trim();
+    const region=document.getElementById("deliveryRegion").value;
+    const street=document.getElementById("customerStreet").value.trim();
+    const number=document.getElementById("customerNumber").value.trim();
+    const complement=document.getElementById("customerComplement").value.trim();
+    const payment=document.getElementById("paymentMethod").value;
+    const observation=document.getElementById("customerObservation").value.trim();
+
+    if(!name){alert("Digite seu nome.");return}
+    if(!phone){alert("Digite seu WhatsApp.");return}
+    if(!region){alert("Selecione a região de entrega.");return}
+    if(!street){alert("Digite sua rua ou avenida.");return}
+    if(!number){alert("Digite o número da casa ou apartamento.");return}
+    if(!payment){alert("Selecione a forma de pagamento.");return}
+
+    const regionName=region==="zona-sul" ? "Zona Sul" : "Santa Antonieta";
+    const deliveryFee=getDeliveryFee();
+
+    let productsTotal=0;
+    cart.forEach(item=>productsTotal+=item.price*item.quantity);
+
+    const finalTotal=productsTotal+deliveryFee;
+
+    let message="🛍️ *NOVO PEDIDO — MARIA CICERA*";
+    message+="\n\n👤 *CLIENTE*";
+    message+="\nNome: "+name;
+    message+="\nWhatsApp: "+phone;
+    message+="\n\n📍 *ENDEREÇO*";
+    message+="\nCidade: Marília - SP";
+    message+="\nRegião: "+regionName;
+    message+="\nRua/Avenida: "+street;
+    message+="\nNúmero: "+number;
+    if(complement) message+="\nComplemento: "+complement;
+
+    message+="\n\n🛒 *PRODUTOS*";
+    cart.forEach(item=>{
+        message+=`\n• ${item.name} — ${item.quantity}x — ${money(item.price*item.quantity)}`;
+    });
+
+    message+="\n\n💰 *VALORES*";
+    message+="\nProdutos: "+money(productsTotal);
+    message+="\nEntrega: "+money(deliveryFee);
+    message+="\n*TOTAL: "+money(finalTotal)+"*";
+
+    message+="\n\n💳 *PAGAMENTO*";
+    message+="\nForma: "+payment;
+
+    if(observation) message+="\n\n📝 *OBSERVAÇÃO*\n"+observation;
+    message+="\n\n❤️ Obrigado pelo pedido!";
+
+    const url="https://wa.me/"+WHATSAPP+"?text="+encodeURIComponent(message);
+    window.open(url,"_blank");
+}
+
+/* =========================================================
+   TEMA
+========================================================= */
+function updateThemeButton(){
+    const dark=document.body.classList.contains("dark");
+    document.getElementById("themeButton").innerText=dark?"☀️":"🌙";
+}
+
+function toggleTheme(){
+    document.body.classList.toggle("dark");
+    localStorage.setItem(
+        "mariaCiceraTheme",
+        document.body.classList.contains("dark")?"dark":"light"
+    );
+    updateThemeButton();
+}
+
+if(localStorage.getItem("mariaCiceraTheme")==="dark"){
+    document.body.classList.add("dark");
+}
+
+updateThemeButton();
+renderProducts();
+updateCart();
+</script>
+
+</body>
+</html>
